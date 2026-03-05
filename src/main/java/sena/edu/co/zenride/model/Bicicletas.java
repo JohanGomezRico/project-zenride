@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 public class Bicicletas {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long idBicicleta;
 
