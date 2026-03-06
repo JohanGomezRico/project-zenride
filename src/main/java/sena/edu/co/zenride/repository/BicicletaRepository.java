@@ -12,6 +12,4 @@ public interface BicicletaRepository extends JpaRepository<Bicicletas,Long> {
 
     Optional<Bicicletas> findByprecioVenta(BigDecimal precio);
 
-
-
 }
