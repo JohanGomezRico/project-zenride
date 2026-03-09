@@ -1,27 +1,36 @@
 package sena.edu.co.zenride.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sena.edu.co.zenride.model.Bicicletas;
 import sena.edu.co.zenride.repository.BicicletaRepository;
 import sena.edu.co.zenride.services.BicicletaService;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BicicletaServiceImpl implements BicicletaService {
 
-    @Autowired
-    private BicicletaRepository bicicletaRepository;
-
+    private final BicicletaRepository bicicletaRepository;
 
     @Override
-    public List<Bicicletas> totalBicicletas() {
+    public List<Bicicletas> listarTodas() {
         return bicicletaRepository.findAll();
     }
 
     @Override
-    public Bicicletas buscarPorId(Long idBicicleta) {
-        return null;
+    public Optional<Bicicletas> buscarPorId(Long id) {
+        return bicicletaRepository.findById(id);
+    }
+
+    @Override
+    public Bicicletas guardar(Bicicletas bicicleta) {
+        return bicicletaRepository.save(bicicleta);
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        bicicletaRepository.deleteById(id);
     }
 }
