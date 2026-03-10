@@ -1,12 +1,12 @@
 package sena.edu.co.zenride.services;
 
 import sena.edu.co.zenride.model.Bicicletas;
-
 import java.util.List;
+import java.util.Optional;
 
 public interface BicicletaService {
-
-    public List<Bicicletas> totalBicicletas();
-
-    public Bicicletas buscarPorId(Long idBicicleta);
+    List<Bicicletas> listarTodas();
+    Optional<Bicicletas> buscarPorId(Long id);
+    Bicicletas guardar(Bicicletas bicicleta);
+    void eliminar(Long id);
 }

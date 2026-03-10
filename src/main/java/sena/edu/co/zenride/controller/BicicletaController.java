@@ -33,7 +33,7 @@ public class BicicletaController {
     @GetMapping(value = "/obtenerBicicletas", produces = "application/json")
     public List<Bicicletas> getBicicleta() {
 
-        return this.bicicletaService.totalBicicletas();
+        return this.bicicletaService.listarTodas();
 
     }
 
