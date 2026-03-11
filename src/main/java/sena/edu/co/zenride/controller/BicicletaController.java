@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sena.edu.co.zenride.model.Bicicletas;
 import sena.edu.co.zenride.services.BicicletaService;
 
@@ -35,6 +32,12 @@ public class BicicletaController {
 
         return this.bicicletaService.listarTodas();
 
+    }
+
+    @Operation(summary = "Guardar bicicleta")
+    @PostMapping("/guardar")
+    public Bicicletas guardar(@RequestBody Bicicletas bicicleta) {
+        return bicicletaService.guardar(bicicleta);
     }
 
 }

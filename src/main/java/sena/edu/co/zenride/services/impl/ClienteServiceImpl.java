@@ -27,10 +27,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Optional<Cliente> buscarPorDocumento(String documento) {
-        // Nota: Para que este funcione, debes añadir el método en ClienteRepository
-        return clienteRepository.findAll().stream()
-                .filter(c -> c.getDocumento().equals(documento))
-                .findFirst();
+
+        return clienteRepository.findByDocumento(documento);
     }
 
     @Override

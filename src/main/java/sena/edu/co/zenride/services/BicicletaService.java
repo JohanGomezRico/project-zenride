@@ -9,4 +9,10 @@ public interface BicicletaService {
     Optional<Bicicletas> buscarPorId(Long id);
     Bicicletas guardar(Bicicletas bicicleta);
     void eliminar(Long id);
+
+    // Requerimiento: Buscar por código único (útil para el buscador del Front)
+    Optional<Bicicletas> buscarPorCodigo(String codigo);
+
+    // Útil para filtros en la tienda virtual/inventario
+    List<Bicicletas> listarPorTipo(Bicicletas.TipoBicicleta tipo);
 }
