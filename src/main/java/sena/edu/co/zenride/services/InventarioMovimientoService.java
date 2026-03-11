@@ -6,4 +6,6 @@ import java.util.List;
 public interface InventarioMovimientoService {
     InventarioMovimiento registrarMovimiento(InventarioMovimiento movimiento);
     List<InventarioMovimiento> listarMovimientos();
+    List<InventarioMovimiento> buscarPorBicicleta(Long idBicicleta);
+
 }

@@ -7,6 +7,7 @@ import sena.edu.co.zenride.repository.InventarioMovimientoRepository;
 import sena.edu.co.zenride.services.InventarioMovimientoService;
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 public class InventarioMovimientoServiceImpl implements InventarioMovimientoService {
@@ -22,4 +23,10 @@ public class InventarioMovimientoServiceImpl implements InventarioMovimientoServ
     public List<InventarioMovimiento> listarMovimientos() {
         return inventarioRepository.findAll();
     }
+
+    @Override
+    public List<InventarioMovimiento> buscarPorBicicleta(Long idBicicleta) {
+        return inventarioRepository.findByBicicleta_IdBicicleta(idBicicleta);
+    }
+
 }

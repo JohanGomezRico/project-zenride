@@ -25,6 +25,16 @@ public class BicicletaServiceImpl implements BicicletaService {
     }
 
     @Override
+    public Optional<Bicicletas> buscarPorCodigo(String codigo) {
+        return bicicletaRepository.findByCodigoBicicleta(codigo);
+    }
+
+    @Override
+    public List<Bicicletas> listarPorTipo(Bicicletas.TipoBicicleta tipo) {
+        return bicicletaRepository.findByTipoBicicleta(tipo);
+    }
+
+    @Override
     public Bicicletas guardar(Bicicletas bicicleta) {
         return bicicletaRepository.save(bicicleta);
     }
