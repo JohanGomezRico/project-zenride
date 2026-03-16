@@ -19,7 +19,7 @@ public class Bicicletas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private long idBicicleta;
+    private Long idBicicleta;
 
     @Column(name= "codigo")
     private String codigoBicicleta;
