@@ -1,5 +1,7 @@
 package sena.edu.co.zenride.services;
 
+import sena.edu.co.zenride.dto.request.BicicletaRequestDTO;
+import sena.edu.co.zenride.dto.response.BicicletaResponseDTO;
 import sena.edu.co.zenride.model.Bicicletas;
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +9,7 @@ import java.util.Optional;
 public interface BicicletaService {
     List<Bicicletas> listarTodas();
     Optional<Bicicletas> buscarPorId(Long id);
-    Bicicletas guardar(Bicicletas bicicleta);
+    BicicletaResponseDTO guardar(BicicletaRequestDTO bicicletaRequestDTO);
     void eliminar(Long id);
 
     // Requerimiento: Buscar por código único (útil para el buscador del Front)

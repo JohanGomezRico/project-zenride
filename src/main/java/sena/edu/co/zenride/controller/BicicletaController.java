@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sena.edu.co.zenride.dto.request.BicicletaRequestDTO;
+import sena.edu.co.zenride.dto.response.BicicletaResponseDTO;
 import sena.edu.co.zenride.model.Bicicletas;
 import sena.edu.co.zenride.services.BicicletaService;
 
@@ -36,8 +38,8 @@ public class BicicletaController {
 
     @Operation(summary = "Guardar bicicleta")
     @PostMapping("/guardar")
-    public Bicicletas guardar(@RequestBody Bicicletas bicicleta) {
-        return bicicletaService.guardar(bicicleta);
+    public BicicletaResponseDTO guardar(@RequestBody BicicletaRequestDTO bicicletaRequestDTO) {
+        return bicicletaService.guardar(bicicletaRequestDTO);
     }
 
 }
