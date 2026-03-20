@@ -1,15 +1,21 @@
-package sena.edu.co.zenride.dto.request;
+package sena.edu.co.zenride.dtos.request;
 
+import jakarta.validation.constraints.*;
 import lombok.Data;
-import java.math.BigDecimal;
-import sena.edu.co.zenride.model.Bicicletas.TipoBicicleta;
 
 @Data
 public class BicicletaRequestDTO {
-    private String codigoBicicleta;
-    private String marcaBicicleta;
-    private String modeloBicicleta;
-    private TipoBicicleta tipoBicicleta;
-    private BigDecimal precioVenta;
-    private Integer stockBicicleta;
+    @NotBlank(message = "El código es obligatorio")
+    private String codigo;
+
+    @NotBlank(message = "La marca no puede estar vacía")
+    private String marca;
+
+    private String modelo;
+
+    @NotNull(message = "El precio es obligatorio")
+    @Positive(message = "El precio debe ser mayor a cero")
+    private Double precioVenta;
+
+    private String tipo; // Se recibe como String y el Mapper lo pasa a ENUM
 }

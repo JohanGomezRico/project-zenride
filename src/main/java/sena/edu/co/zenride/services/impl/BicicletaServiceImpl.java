@@ -1,51 +1,75 @@
 package sena.edu.co.zenride.services.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sena.edu.co.zenride.dto.mapper.IBicicletaMapper;
-import sena.edu.co.zenride.dto.request.BicicletaRequestDTO;
-import sena.edu.co.zenride.dto.response.BicicletaResponseDTO;
-import sena.edu.co.zenride.model.Bicicletas;
+import org.springframework.transaction.annotation.Transactional;
+import sena.edu.co.zenride.dtos.request.BicicletaRequestDTO;
+import sena.edu.co.zenride.dtos.response.BicicletaResponseDTO;
+import sena.edu.co.zenride.entities.Bicicleta;
+import sena.edu.co.zenride.entities.InventarioMovimiento;
+import sena.edu.co.zenride.mapper.BicicletaMapper;
 import sena.edu.co.zenride.repository.BicicletaRepository;
-import sena.edu.co.zenride.services.BicicletaService;
+import sena.edu.co.zenride.repository.InventarioMovimientoRepository;
+import sena.edu.co.zenride.services.IBicicletaService;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class BicicletaServiceImpl implements BicicletaService {
+public class BicicletaServiceImpl implements IBicicletaService {
 
-    private final BicicletaRepository bicicletaRepository;
+    @Autowired
+    private BicicletaRepository bicicletaRepository;
 
-    private final IBicicletaMapper iBicicletaMapper;
+    @Autowired
+    private InventarioMovimientoRepository movimientoRepository;
+
+    @Autowired
+    private BicicletaMapper bicicletaMapper; // Inyectamos el Mapper
 
     @Override
-    public List<Bicicletas> listarTodas() {
-        return bicicletaRepository.findAll();
+    public List<BicicletaResponseDTO> listarTodas() {
+        List<Bicicleta> bicicletas = bicicletaRepository.findAll();
+        // Usamos el mapper para convertir la lista de entidades a DTOs
+        return bicicletaMapper.toResponseDTOList(bicicletas);
     }
 
     @Override
-    public Optional<Bicicletas> buscarPorId(Long id) {
-        return bicicletaRepository.findById(id);
+    public BicicletaResponseDTO buscarPorId(Long id) {
+        Bicicleta bici = bicicletaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bicicleta no encontrada"));
+        return bicicletaMapper.toResponseDTO(bici);
     }
 
     @Override
-    public Optional<Bicicletas> buscarPorCodigo(String codigo) {
-        return bicicletaRepository.findByCodigoBicicleta(codigo);
+    @Transactional
+    public BicicletaResponseDTO guardar(BicicletaRequestDTO request) {
+        // Convertimos el DTO que llega de Angular a una Entidad para MySQL
+        Bicicleta bicicleta = bicicletaMapper.toEntity(request);
+        Bicicleta guardada = bicicletaRepository.save(bicicleta);
+        // Devolvemos el DTO de respuesta
+        return bicicletaMapper.toResponseDTO(guardada);
     }
 
     @Override
-    public List<Bicicletas> listarPorTipo(Bicicletas.TipoBicicleta tipo) {
-        return bicicletaRepository.findByTipoBicicleta(tipo);
-    }
+    @Transactional
+    public void registrarEntrada(Long idBicicleta, Integer cantidad, String responsable) {
+        // Buscamos la entidad original
+        Bicicleta bici = bicicletaRepository.findById(idBicicleta)
+                .orElseThrow(() -> new RuntimeException("Bicicleta no encontrada"));
 
-    @Override
-    public BicicletaResponseDTO guardar(BicicletaRequestDTO bicicletaRequestDTO) {
-        Bicicletas bicicleta = bicicletaRepository.save(iBicicletaMapper.toEntity(bicicletaRequestDTO));
-        return iBicicletaMapper.toResponse(bicicleta);
-    }
+        // Lógica de negocio (Stock)
+        bici.setStockActual(bici.getStockActual() + cantidad);
+        bicicletaRepository.save(bici);
 
+        // Registro de Auditoría
+        InventarioMovimiento mov = new InventarioMovimiento();
+        mov.setBicicleta(bici);
+        mov.setCantidad(cantidad);
+        mov.setTipoMovimiento(InventarioMovimiento.TipoMovimiento.ENTRADA);
+        mov.setResponsableOperacion(responsable);
+        mov.setDescripcion("Ingreso de mercancía al almacén");
+        movimientoRepository.save(mov);
+    }
 
     @Override
     public void eliminar(Long id) {

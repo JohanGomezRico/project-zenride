@@ -2,19 +2,11 @@ package sena.edu.co.zenride.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sena.edu.co.zenride.model.Bicicletas;
-
-import java.math.BigDecimal;
-import java.util.List;
+import sena.edu.co.zenride.entities.Bicicleta;
 import java.util.Optional;
 
 @Repository
-public interface BicicletaRepository extends JpaRepository<Bicicletas,Long> {
-
-    Optional<Bicicletas> findByprecioVenta(BigDecimal precio);
-
-    Optional<Bicicletas> findByCodigoBicicleta(String codigo);
-
-    // Para listar por tipo (Montaña, Ruta, Urbana)
-    List<Bicicletas> findByTipoBicicleta(Bicicletas.TipoBicicleta tipo);
+public interface BicicletaRepository extends JpaRepository<Bicicleta, Long> {
+    // Método personalizado para buscar por el código de barras/referencia
+    Optional<Bicicleta> findByCodigo(String codigo);
 }

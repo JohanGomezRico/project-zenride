@@ -1,43 +1,39 @@
 package sena.edu.co.zenride.services.impl;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sena.edu.co.zenride.model.Cliente;
+import sena.edu.co.zenride.dto.request.ClienteRequestDTO;
+import sena.edu.co.zenride.dto.response.ClienteResponseDTO;
+import sena.edu.co.zenride.entities.Cliente;
+import sena.edu.co.zenride.mapper.ClienteMapper;
 import sena.edu.co.zenride.repository.ClienteRepository;
-import sena.edu.co.zenride.services.ClienteService;
-
+import sena.edu.co.zenride.services.IClienteService;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class ClienteServiceImpl implements ClienteService {
+public class ClienteServiceImpl implements IClienteService {
 
-    private final ClienteRepository clienteRepository;
+    @Autowired private ClienteRepository clienteRepository;
+    @Autowired private ClienteMapper clienteMapper;
 
     @Override
-    public List<Cliente> listarTodos() {
-        return clienteRepository.findAll();
+    public List<ClienteResponseDTO> listarTodos() {
+        // Obtenemos entidades de la BD
+        List<Cliente> listaEntidades = clienteRepository.findAll();
+        // Convertimos a DTOs para que el Controller no marque error
+        return clienteMapper.toResponseList(listaEntidades);
     }
 
     @Override
-    public Optional<Cliente> buscarPorId(Long id) {
-        return clienteRepository.findById(id);
+    public ClienteResponseDTO buscarPorDocumento(String documento) {
+        Cliente cliente = clienteRepository.findByDocumento(documento)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        return clienteMapper.toResponseDTO(cliente);
     }
 
     @Override
-    public Optional<Cliente> buscarPorDocumento(String documento) {
-
-        return clienteRepository.findByDocumento(documento);
-    }
-
-    @Override
-    public Cliente guardar(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
-
-    @Override
-    public void eliminar(Long id) {
-        clienteRepository.deleteById(id);
+    public ClienteResponseDTO guardar(ClienteRequestDTO request) {
+        Cliente cliente = clienteMapper.toEntity(request);
+        return clienteMapper.toResponseDTO(clienteRepository.save(cliente));
     }
 }

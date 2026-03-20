@@ -1,45 +1,45 @@
 package sena.edu.co.zenride.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sena.edu.co.zenride.dto.request.BicicletaRequestDTO;
-import sena.edu.co.zenride.dto.response.BicicletaResponseDTO;
-import sena.edu.co.zenride.model.Bicicletas;
-import sena.edu.co.zenride.services.BicicletaService;
-
+import sena.edu.co.zenride.dtos.request.BicicletaRequestDTO;
+import sena.edu.co.zenride.dtos.response.BicicletaResponseDTO;
+import sena.edu.co.zenride.services.IBicicletaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
-@RequiredArgsConstructor
+@RequestMapping("/api/bicicletas")
+@CrossOrigin(origins = "*") // Permite que Angular se conecte
 public class BicicletaController {
 
-
     @Autowired
-    private BicicletaService bicicletaService;
+    private IBicicletaService bicicletaService;
 
-    @Operation(summary = "Obtener bicicletas", description = "Servicio para obtener todos los bicicletas")
-    @ApiResponses({ @ApiResponse(responseCode = "200", description = "Exitoso"),
-            @ApiResponse(responseCode = "204", description = "No hay información"),
-            @ApiResponse(responseCode = "500", description = "Error interno"),
-            @ApiResponse(responseCode = "400", description = "Error de request"),
-            @ApiResponse(responseCode = "401", description = "No autorizado") })
-    @GetMapping(value = "/obtenerBicicletas", produces = "application/json")
-    public List<Bicicletas> getBicicleta() {
-
-        return this.bicicletaService.listarTodas();
-
+    @GetMapping
+    public ResponseEntity<List<BicicletaResponseDTO>> listar() {
+        return ResponseEntity.ok(bicicletaService.listarTodas());
     }
 
-    @Operation(summary = "Guardar bicicleta")
-    @PostMapping("/guardar")
-    public BicicletaResponseDTO guardar(@RequestBody BicicletaRequestDTO bicicletaRequestDTO) {
-        return bicicletaService.guardar(bicicletaRequestDTO);
+    @GetMapping("/{id}")
+    public ResponseEntity<BicicletaResponseDTO> obtenerPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(bicicletaService.buscarPorId(id));
     }
 
+    @PostMapping
+    public ResponseEntity<BicicletaResponseDTO> crear(@RequestBody BicicletaRequestDTO request) {
+        return ResponseEntity.ok(bicicletaService.guardar(request));
+    }
+
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<String> cargarStock(@PathVariable Long id, @RequestParam Integer cantidad, @RequestParam String responsable) {
+        bicicletaService.registrarEntrada(id, cantidad, responsable);
+        return ResponseEntity.ok("Stock actualizado correctamente");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        bicicletaService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
 }
