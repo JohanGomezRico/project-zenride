@@ -1,15 +1,14 @@
 package sena.edu.co.zenride.dto.response;
 
 import lombok.Data;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class VentaResponseDTO {
-    private Long idVenta;
-    private String nombreCliente; // En vez de todo el cliente, solo le pasamos el nombre
+    private Long id;
     private LocalDateTime fechaVenta;
-    private BigDecimal totalVenta;
-    // Si quieres, puedes devolver la lista de detalles aquí también,
-    // pero a veces con el total y la fecha es suficiente para una tabla.
+    private Double totalVenta;
+    private String nombreCliente; // Para mostrar en Angular directamente
+    private List<DetalleVentaResponseDTO> detalles;
 }

@@ -1,14 +1,13 @@
 package sena.edu.co.zenride.dto.response;
 
 import lombok.Data;
-import java.math.BigDecimal;
 
 @Data
 public class DetalleVentaResponseDTO {
-    // A Angular no le enviamos el objeto Bicicleta completo, solo lo que le importa al usuario
-    private String marcaBicicleta;
-    private String modeloBicicleta;
+    private Long id;
+    private String codigoBicicleta; // "BICI-001"
+    private String modeloBicicleta; // "Mountain Pro 2026"
     private Integer cantidad;
-    private BigDecimal precioUnitario;
-    private BigDecimal subtotal;
+    private Double precioUnitarioVenta;
+    private Double subtotal;
 }

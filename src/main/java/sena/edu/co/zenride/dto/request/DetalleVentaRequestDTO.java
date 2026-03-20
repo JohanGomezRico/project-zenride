@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class DetalleVentaRequestDTO {
-    private Long idBicicleta; // Solo necesitamos saber qué bici es
-    private Integer cantidad; // Y cuántas va a llevar
+    private Long bicicletaId; // ID de la bici que se lleva
+    private Integer cantidad;
 }

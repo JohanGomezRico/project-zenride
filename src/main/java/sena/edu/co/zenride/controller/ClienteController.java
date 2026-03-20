@@ -1,30 +1,33 @@
 package sena.edu.co.zenride.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sena.edu.co.zenride.model.Cliente;
-import sena.edu.co.zenride.services.ClienteService;
-
+import sena.edu.co.zenride.dto.request.ClienteRequestDTO;
+import sena.edu.co.zenride.dto.response.ClienteResponseDTO;
+import sena.edu.co.zenride.services.IClienteService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/clientes")
-@RequiredArgsConstructor
+@RequestMapping("/api/clientes")
 @CrossOrigin(origins = "*")
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    @Autowired
+    private IClienteService clienteService;
 
-    @Operation(summary = "Listar clientes registrados")
-    @GetMapping("/obtenerClientes")
-    public List<Cliente> getClientes() {
-        return clienteService.listarTodos();
+    @GetMapping
+    public ResponseEntity<List<ClienteResponseDTO>> listar() {
+        return ResponseEntity.ok(clienteService.listarTodos());
     }
 
-    @Operation(summary = "Registrar cliente")
-    @PostMapping("/guardar")
-    public Cliente guardar(@RequestBody Cliente cliente) {
-        return clienteService.guardar(cliente);
+    @GetMapping("/documento/{doc}")
+    public ResponseEntity<ClienteResponseDTO> buscar(@PathVariable String doc) {
+        return ResponseEntity.ok(clienteService.buscarPorDocumento(doc));
+    }
+
+    @PostMapping
+    public ResponseEntity<ClienteResponseDTO> registrar(@RequestBody ClienteRequestDTO request) {
+        return ResponseEntity.ok(clienteService.guardar(request));
     }
 }

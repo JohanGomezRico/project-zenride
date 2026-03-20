@@ -1,12 +1,25 @@
 package sena.edu.co.zenride.dto.request;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import sena.edu.co.zenride.model.InventarioMovimiento.TipoMovimiento;
 
 @Data
 public class InventarioMovimientoRequestDTO {
-    private Long idBicicleta; // Angular nos dice a qué bici le entra stock
-    private TipoMovimiento tipoMovimiento; // ENTRADA o SALIDA
+
+    @NotNull(message = "El ID de la bicicleta es obligatorio")
+    private Long bicicletaId;
+
+    @NotNull(message = "La cantidad es obligatoria")
+    @Min(value = 1, message = "La cantidad debe ser al menos 1")
     private Integer cantidad;
+
+    @NotBlank(message = "El tipo de movimiento es obligatorio (ENTRADA/SALIDA)")
+    private String tipoMovimiento;
+
+    @NotBlank(message = "El responsable es obligatorio")
+    private String responsableOperacion;
+
     private String descripcion;
 }

@@ -1,9 +1,8 @@
 package sena.edu.co.zenride.repository;
 
-import sena.edu.co.zenride.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+import sena.edu.co.zenride.entities.Cliente;
 import java.util.Optional;
 
 @Repository
