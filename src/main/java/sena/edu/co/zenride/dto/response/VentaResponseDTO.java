@@ -10,5 +10,6 @@ public class VentaResponseDTO {
     private LocalDateTime fechaVenta;
     private Double totalVenta;
     private String nombreCliente; // Para mostrar en Angular directamente
+    private String documento;
     private List<DetalleVentaResponseDTO> detalles;
 }

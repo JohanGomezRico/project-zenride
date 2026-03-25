@@ -9,10 +9,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface InventarioMovimientoMapper {
 
+    // CAMBIO: El target debe ser 'bicicletaCodigo' (como está en tu DTO)
+    @Mapping(source = "bicicleta.codigo", target = "bicicletaCodigo")
+    // Opcional: Si quieres mostrar el modelo, asegúrate que el DTO tenga 'nombreBicicleta'
     @Mapping(source = "bicicleta.modelo", target = "nombreBicicleta")
-    @Mapping(source = "bicicleta.codigo", target = "codigoBicicleta")
+
+    @Mapping(source = "descripcion", target = "descripcion")
     InventarioMovimientoResponseDTO toResponseDTO(InventarioMovimiento entidad);
 
-    // Este método soluciona el error de "Incompatible Bounds"
     List<InventarioMovimientoResponseDTO> toResponseList(List<InventarioMovimiento> entidades);
 }

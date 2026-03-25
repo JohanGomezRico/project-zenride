@@ -3,8 +3,8 @@ package sena.edu.co.zenride.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sena.edu.co.zenride.dtos.request.BicicletaRequestDTO;
-import sena.edu.co.zenride.dtos.response.BicicletaResponseDTO;
+import sena.edu.co.zenride.dto.request.BicicletaRequestDTO;
+import sena.edu.co.zenride.dto.response.BicicletaResponseDTO;
 import sena.edu.co.zenride.services.IBicicletaService;
 import java.util.List;
 
@@ -31,9 +31,9 @@ public class BicicletaController {
         return ResponseEntity.ok(bicicletaService.guardar(request));
     }
 
-    @PutMapping("/{id}/stock")
-    public ResponseEntity<String> cargarStock(@PathVariable Long id, @RequestParam Integer cantidad, @RequestParam String responsable) {
-        bicicletaService.registrarEntrada(id, cantidad, responsable);
+    @PutMapping("/{codigo}/stock")
+    public ResponseEntity<String> cargarStock(@PathVariable String codigo, @RequestParam Integer cantidad, @RequestParam String responsable,@RequestParam String entrada) {
+        bicicletaService.registrarEntrada(codigo, cantidad, responsable, entrada);
         return ResponseEntity.ok("Stock actualizado correctamente");
     }
 

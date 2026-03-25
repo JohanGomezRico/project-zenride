@@ -1,4 +1,4 @@
-package sena.edu.co.zenride.dtos.request;
+package sena.edu.co.zenride.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;

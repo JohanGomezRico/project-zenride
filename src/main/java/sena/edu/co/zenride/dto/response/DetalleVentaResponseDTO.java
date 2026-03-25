@@ -8,6 +8,6 @@ public class DetalleVentaResponseDTO {
     private String codigoBicicleta; // "BICI-001"
     private String modeloBicicleta; // "Mountain Pro 2026"
     private Integer cantidad;
-    private Double precioUnitarioVenta;
+    private Double precioVenta;
     private Double subtotal;
 }
