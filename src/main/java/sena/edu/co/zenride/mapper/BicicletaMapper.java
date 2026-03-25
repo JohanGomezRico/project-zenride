@@ -2,8 +2,8 @@ package sena.edu.co.zenride.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import sena.edu.co.zenride.dtos.request.BicicletaRequestDTO;
-import sena.edu.co.zenride.dtos.response.BicicletaResponseDTO;
+import sena.edu.co.zenride.dto.request.BicicletaRequestDTO;
+import sena.edu.co.zenride.dto.response.BicicletaResponseDTO;
 import sena.edu.co.zenride.entities.Bicicleta;
 
 import java.util.List;

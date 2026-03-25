@@ -1,4 +1,4 @@
-package sena.edu.co.zenride.dtos.response;
+package sena.edu.co.zenride.dto.response;
 
 import lombok.Data;
 
@@ -11,4 +11,6 @@ public class BicicletaResponseDTO {
     private String tipo;
     private Double precioVenta;
     private Integer stockActual;
+
+    private Integer stockTotalPorTipo;
 }

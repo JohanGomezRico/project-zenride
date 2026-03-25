@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface BicicletaRepository extends JpaRepository<Bicicleta, Long> {
     // Método personalizado para buscar por el código de barras/referencia
     Optional<Bicicleta> findByCodigo(String codigo);
+
 }
