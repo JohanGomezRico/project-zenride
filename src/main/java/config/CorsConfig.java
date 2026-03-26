@@ -12,7 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Aplica a todos los endpoints de tu API (ej. /api/bicicletas, /api/clientes)
                 .allowedOrigins(
                     "http://localhost:4200", // Para cuando pruebes tu frontend localmente
-                    "https://frontend-zenride-ouqr.vercel.app/inicio" // IMPORTANTE: Reemplaza esto con tu URL exacta de Vercel
+                    "https://frontend-zenride-ouqr.vercel.app" // IMPORTANTE: Reemplaza esto con tu URL exacta de Vercel
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
