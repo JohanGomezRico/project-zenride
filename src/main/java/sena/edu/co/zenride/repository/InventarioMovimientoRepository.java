@@ -9,5 +9,7 @@ import java.util.List;
 public interface InventarioMovimientoRepository extends JpaRepository<InventarioMovimiento, Long> {
     // Para buscar movimientos de una bici específica
     List<InventarioMovimiento> findByBicicletaId(Long bicicletaId);
+ // Buscar movimientos en un rango de fechas
+    List<InventarioMovimiento> findByFechaMovimientoBetween(java.time.LocalDateTime inicio, java.time.LocalDateTime fin);
 
 }
