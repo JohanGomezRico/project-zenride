@@ -9,11 +9,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface InventarioMovimientoMapper {
 
-    // CAMBIO: El target debe ser 'bicicletaCodigo' (como está en tu DTO)
     @Mapping(source = "bicicleta.codigo", target = "bicicletaCodigo")
-    // Opcional: Si quieres mostrar el modelo, asegúrate que el DTO tenga 'nombreBicicleta'
-    @Mapping(source = "bicicleta.modelo", target = "nombreBicicleta")
-
+    // Cambiamos 'modelo' por 'marca' o lo que tengas en tu Entidad Bicicleta
+    @Mapping(source = "bicicleta.marca", target = "nombreBicicleta")
     @Mapping(source = "descripcion", target = "descripcion")
     InventarioMovimientoResponseDTO toResponseDTO(InventarioMovimiento entidad);
 
