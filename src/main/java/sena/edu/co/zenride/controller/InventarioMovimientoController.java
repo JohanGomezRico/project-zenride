@@ -26,7 +26,8 @@ public class InventarioMovimientoController {
     }
 
     @PostMapping
-    public ResponseEntity<InventarioMovimientoResponseDTO> registrar(@RequestBody InventarioMovimientoRequestDTO request) {
+    public ResponseEntity<List<InventarioMovimientoResponseDTO>> registrar(@RequestBody InventarioMovimientoRequestDTO request) {
+        // Ahora devuelve List porque el servicio devuelve List
         return ResponseEntity.ok(inventarioService.registrarMovimiento(request));
     }
 }
