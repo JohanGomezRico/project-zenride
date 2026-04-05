@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bicicletas")
-@CrossOrigin(origins = "*") // Permite que Angular se conecte
+@CrossOrigin(originPatterns = "*") // Permite que Angular se conecte
 public class BicicletaController {
 
     @Autowired
