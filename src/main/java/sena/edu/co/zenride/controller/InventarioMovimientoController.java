@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/inventario")
-@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "*")
 public class InventarioMovimientoController {
     @Autowired
     private IInventarioMovimientoService inventarioService;
