@@ -3,6 +3,7 @@ package sena.edu.co.zenride.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,6 +39,9 @@ public class SecurityConfig {
                     
                     // 👇 ¡NUEVO! Le decimos al guardia que deje pasar a Swagger
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                    
+                    //Permitimos que el cliente pueda ver el catalogo sin loguearse
+                    .requestMatchers(HttpMethod.GET, "/api/bicicletas/**").permitAll()
                     
                     // Exigimos token para cualquier otra ruta (bicicletas, inventario, ventas, etc.)
                     .anyRequest().authenticated()
