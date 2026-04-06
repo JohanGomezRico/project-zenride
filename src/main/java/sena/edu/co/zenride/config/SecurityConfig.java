@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -23,6 +24,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+        		
+        	//Le decimos al guardia que respete las reglas de @CrossOrigin
+        	.cors(Customizer.withDefaults())
             // 1. Desactivamos CSRF porque no usamos cookies, usaremos tokens JWT
             .csrf(csrf -> csrf.disable())
             
