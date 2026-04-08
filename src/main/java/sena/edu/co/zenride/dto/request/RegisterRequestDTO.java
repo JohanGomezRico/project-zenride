@@ -6,5 +6,6 @@ import sena.edu.co.zenride.entities.Usuario.Rol;
 public class RegisterRequestDTO {
 	private String username;
 	private String password;
+	private String email;
 	private Rol rol;
 }

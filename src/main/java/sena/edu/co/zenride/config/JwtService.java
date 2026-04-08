@@ -21,9 +21,15 @@ public class JwtService {
     // Es una cadena aleatoria codificada en Base64 de al menos 256 bits.
     private static final String SECRET_KEY = "586E3272357538782F413F4428472B4B6250655368566D597133743677397A24";
 
-    // 1. Método para generar el token (Se usa en el Login)
+ // 1. Método para generar el token (Se usa en el Login)
     public String getToken(UserDetails user) {
-        return getToken(new HashMap<>(), user);
+        Map<String, Object> extraClaims = new HashMap<>();
+        
+        // Extraemos el rol del usuario (Ej: ROLE_ADMIN, ROLE_CLIENTE) y lo metemos a la maleta
+        String rolUsuario = user.getAuthorities().iterator().next().getAuthority();
+        extraClaims.put("rol", rolUsuario);
+        
+        return getToken(extraClaims, user);
     }
 
     private String getToken(Map<String, Object> extraClaims, UserDetails user) {
