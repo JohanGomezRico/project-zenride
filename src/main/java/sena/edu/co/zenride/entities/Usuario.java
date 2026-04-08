@@ -30,14 +30,17 @@ public class Usuario implements UserDetails {
     // Aquí guardaremos la contraseña (¡siempre encriptada, nunca en texto plano!)
     @Column(nullable = false)
     private String password;
+    
+    @Column(unique = true, length = 100)
+    private String email;
 
-    // Para saber si es ADMINISTRADOR o VENDEDOR
+    // Para saber si es ADMINISTRADOR o VENDEDOR o CLIENTE
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
 
     public enum Rol {
-        ADMIN, VENDEDOR
+        ADMIN, VENDEDOR, CLIENTE
     }
 
     // ========================================================================
@@ -67,7 +70,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // La cuenta no está bloqueada
+        return true; // La cuenta no está bloqueada	
     }
 
     @Override
@@ -79,4 +82,4 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true; // El usuario está activo
     }
-}
+}	
