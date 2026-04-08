@@ -27,12 +27,7 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO request) {
         return ResponseEntity.ok(authService.register(request));
     }
-    
- // 👇 NUEVO ENDPOINT PÚBLICO PARA CLIENTES
-    @PostMapping("/registro-cliente")
-    public ResponseEntity<AuthResponseDTO> registerCliente(@RequestBody RegisterRequestDTO request) {
-        return ResponseEntity.ok(authService.registerCliente(request));
-    }
+
     
  // 👇 NUEVO ENDPOINT: Para que tu panel de Admin obtenga la lista
     @GetMapping("/usuarios")

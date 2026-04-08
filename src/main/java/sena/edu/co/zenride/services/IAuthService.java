@@ -24,6 +24,7 @@ public class IAuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final sena.edu.co.zenride.repository.ClienteRepository clienteRepository;
 
     // 1. Método para iniciar sesión
     public AuthResponseDTO login(LoginRequestDTO request) {
@@ -55,25 +56,6 @@ public class IAuthService {
         usuarioRepository.save(usuario);
 
         // Opcional: Devolver un token inmediatamente después de registrarse
-        return AuthResponseDTO.builder()
-                .token(jwtService.getToken(usuario))
-                .build();
-    }
-    
- // 👇 3. NUEVO MÉTODO: Registro exclusivo para CLIENTES desde la web pública
-    public AuthResponseDTO registerCliente(RegisterRequestDTO request) {
-        Usuario usuario = new Usuario();
-        usuario.setUsername(request.getUsername());
-        usuario.setPassword(passwordEncoder.encode(request.getPassword()));
-        
-        // Guardamos el correo que viene desde el frontend
-        usuario.setEmail(request.getEmail()); 
-        
-        // ¡Magia de seguridad! Forzamos a que siempre sea CLIENTE, sin importar qué intenten hackear
-        usuario.setRol(Usuario.Rol.CLIENTE);
-
-        usuarioRepository.save(usuario);
-
         return AuthResponseDTO.builder()
                 .token(jwtService.getToken(usuario))
                 .build();

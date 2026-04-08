@@ -35,7 +35,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authRequest ->
                 authRequest
                     // Dejamos pasar libremente cualquier petición a la ruta de login y registro
-                    .requestMatchers("/api/auth/**", "/error").permitAll()
+                    .requestMatchers("/api/auth/**", "/error", "/api/reservas/**").permitAll()
                     
                     // 👇 ¡NUEVO! Le decimos al guardia que deje pasar a Swagger
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
