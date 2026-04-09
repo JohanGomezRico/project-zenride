@@ -21,31 +21,39 @@ public class ReporteController {
 	@Autowired
     private IReporteService reporteService;
 
-    // Obtener los datos JSON para mostrar en pantalla
+	// Obtener los datos JSON para mostrar en pantalla
     @GetMapping("/resumen")
     public ResponseEntity<ReporteResumenResponseDTO> obtenerResumen(
             @RequestParam("fechaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
-            @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin) {
+            @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+            // 👇 NUEVOS FILTROS (Son requeridos, pero en Angular enviaremos "Todos")
+            @RequestParam(value = "tipo", defaultValue = "Todos") String tipo,
+            @RequestParam(value = "marca", defaultValue = "Todas") String marca,
+            @RequestParam(value = "vendedor", defaultValue = "Todos") String vendedor) {
         
-        // Convertimos LocalDate a LocalDateTime (Inicio del día y fin del día)
         LocalDateTime inicio = fechaInicio.atStartOfDay();
         LocalDateTime fin = fechaFin.atTime(LocalTime.MAX);
         
-        return ResponseEntity.ok(reporteService.generarResumen(inicio, fin));
-}
+        // Le pasamos los nuevos filtros al servicio
+        return ResponseEntity.ok(reporteService.generarResumen(inicio, fin, tipo, marca, vendedor));
+    }
     
  // Descargar el archivo PDF
     @GetMapping("/descargar-pdf")
     public ResponseEntity<byte[]> descargarPdf(
             @RequestParam("fechaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
-            @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin) {
+            @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+            // 👇 Agregamos los filtros opcionales aquí también
+            @RequestParam(value = "tipo", defaultValue = "Todos") String tipo,
+            @RequestParam(value = "marca", defaultValue = "Todas") String marca,
+            @RequestParam(value = "vendedor", defaultValue = "Todos") String vendedor) {
 
         LocalDateTime inicio = fechaInicio.atStartOfDay();
         LocalDateTime fin = fechaFin.atTime(LocalTime.MAX);
 
-        byte[] pdfBytes = reporteService.generarPdfResumen(inicio, fin);
+        // 👇 Pasamos todos los parámetros al servicio
+        byte[] pdfBytes = reporteService.generarPdfResumen(inicio, fin, tipo, marca, vendedor);
 
-        // Configuramos los headers para que el navegador sepa que es un PDF y fuerce la descarga
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("attachment", "Reporte_ZenRide.pdf");
